@@ -15,12 +15,15 @@ jobs:
         uses: actions/setup-python@v2
         with:
           python-version: "3.13"
-      - name: Install poetry
+
+      - name: Install Poetry
         run: |
-          url -sSL https://install.python-poetry.org | python3 - --version 1.8.5
+          curl -sSL https://install.python-poetry.org | python3 - --version 1.8.5
 
       - name: Register Poetry bin
-        run: echo "${HOME}/.poetry/bin" >> $GITHUB_PATH
+        run: |
+          echo "${HOME}/.local/bin" >> $GITHUB_PATH
+          echo "${HOME}/.poetry/bin" >> $GITHUB_PATH
 
       - name: Install dependencies
         run: poetry install --no-root
@@ -46,14 +49,16 @@ jobs:
         id: setup-python
         uses: actions/setup-python@v2
         with:
-          python-version: '3.13'
+          python-version: "3.13"
 
       - name: Install Poetry
         run: |
           curl -sSL https://install.python-poetry.org | python3 - --version 1.8.5
 
       - name: Register Poetry bin
-        run: echo "${HOME}/.poetry/bin" >> $GITHUB_PATH
+        run: |
+          echo "${HOME}/.local/bin" >> $GITHUB_PATH
+          echo "${HOME}/.poetry/bin" >> $GITHUB_PATH
 
       - name: Install dependencies
         run: poetry install --no-root
@@ -62,6 +67,3 @@ jobs:
         run: |
           poetry run coverage run -m pytest .
           poetry run coverage report -m
-
-
-
